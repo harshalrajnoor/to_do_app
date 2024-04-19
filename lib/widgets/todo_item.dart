@@ -50,7 +50,7 @@ class ToDoItem extends StatelessWidget {
             color: Colors.white,
             iconSize: 18,
             onPressed: () {
-              print('Clicked on delete button');
+              onDeleteItem(todo.id);
             },
           ),
         ),
