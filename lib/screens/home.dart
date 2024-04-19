@@ -5,9 +5,14 @@ import 'package:to_do_app/constants/colors.dart';
 import 'package:to_do_app/model/todo.dart';
 import 'package:to_do_app/widgets/todo_item.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final todoList = ToDo.todoList();
 
   @override
@@ -33,7 +38,12 @@ class Home extends StatelessWidget {
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      for (ToDo todo in todoList) ToDoItem(todo: todo)
+                      for (ToDo todo in todoList)
+                        ToDoItem(
+                          todo: todo,
+                          onToDoChanged: _handleToDoChange,
+                          onDeleteItem: () {},
+                        )
                     ],
                   ),
                 )
@@ -71,6 +81,8 @@ class Home extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: tdBlue,
+                      foregroundColor: Colors.white,
                       minimumSize: const Size(60, 60),
                       elevation: 10,
                       shape: RoundedRectangleBorder(
@@ -89,6 +101,12 @@ class Home extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleToDoChange(ToDo toDo) {
+    setState(() {
+      toDo.isDone = !toDo.isDone;
+    });
   }
 
   Widget searchBox() {
